@@ -3,7 +3,7 @@ import EmailService from "../../Services/EmailService";
 
 export const StartEmailCron = async () => {
   cron.schedule("* * * * *", async () => {
-    // console.log("*********Cron starting**********");
+    console.log("*********Cron starting**********");
     const email = new EmailService();
     const date = new Date();
 
@@ -15,23 +15,23 @@ export const StartEmailCron = async () => {
     try {
       const pending = await email.getPending(data, BATCH_SIZE);
 
-      //   console.log(`There are ${pending.length} unsent emails.`);
+      console.log(`There are ${pending.length} unsent emails.`);
 
       if (pending.length > 0) {
         for (const record of pending) {
           const send = await email.send(record);
-          //   if (send) {
-          //     console.log(`Ref:${record.reference} has been sent`);
-          //   } else {
-          //     console.log(`Ref:${record.reference} failed to send`);
-          //   }
+          if (send) {
+            console.log(`Ref:${record.reference} has been sent`);
+          } else {
+            console.log(`Ref:${record.reference} failed to send`);
+          }
         }
-        // console.log(`Pending emails : ${pending.length}`);
+        console.log(`Pending emails : ${pending.length}`);
       } else {
-        // console.log("No pending emails found");
+        console.log("No pending emails found");
       }
     } catch (error: any) {
-      //   console.log(error);
+      console.log(error);
     }
   });
 };
