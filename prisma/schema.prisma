@@ -1,11 +1,31 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// Define the datasource and generator
+datasource db {
+  provider = "mongodb" // Specify MongoDB as your provider
+  url      = env("DATABASE_URL")
+}
 
 generator client {
   provider = "prisma-client-js"
 }
 
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+model ScheduledEmail {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  to             String   // Recipient email
+  subject        String
+  text           String   // Email body content
+  scheduledTime  DateTime // When the email should be sent
+  status         EmailStatus? @default(PENDING) // Status: pending, sent, etc.
+  createdAt      DateTime @default(now()) // Timestamp of creation
+  updatedAt      DateTime @updatedAt     // Timestamp of last update
+  deletedAt      DateTime? 
+   reference      String   @default(uuid())
+
+  @@map("scheduled_emails")
+}
+
+// Enum to define email statuses
+enum EmailStatus {
+  PENDING
+  SENT
+  FAILED
 }

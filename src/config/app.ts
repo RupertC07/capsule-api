@@ -1,4 +1,3 @@
-
 import express, { NextFunction, Request, Response } from "express";
 import bodyParser from "body-parser";
 import AppError from "../utils/AppError";
@@ -14,21 +13,19 @@ app.use(bodyParser.json());
 
 // Development logging
 if (process.env.PROJECT_ENV === "development") {
-    app.use(morgan("dev"));
-  }
+  app.use(morgan("dev"));
+}
 
-app.use('/api/v2/', routes);
+app.use("/api/v1/", routes);
 swagger(app);
 
-app.get('/', (req, res) => {
-    
-    return res.redirect('/docs');
-  });
-  
+app.get("/", (req, res) => {
+  return res.redirect("/docs");
+});
 
 // Global Error Handler for all routes
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
-    next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
-  });
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+});
 
 export default app;
