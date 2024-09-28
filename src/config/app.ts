@@ -20,7 +20,7 @@ app.use("/api/v1/", routes);
 swagger(app);
 
 app.get("/", (req, res) => {
-  return res.redirect("/docs");
+  return res.json({ message: "Time Capsule" });
 });
 
 // Global Error Handler for all routes
