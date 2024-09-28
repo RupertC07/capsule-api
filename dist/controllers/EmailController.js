@@ -61,6 +61,27 @@ class EmailController {
                 });
             }
         });
+        this.cron = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield this.emailService.cron().then(() => {
+                    return AppResponse_1.default.sendSuccess({
+                        res,
+                        data: null,
+                        message: "Cron",
+                        code: 200,
+                    });
+                });
+            }
+            catch (error) {
+                console.log(error);
+                return AppResponse_1.default.sendError({
+                    res,
+                    data: null,
+                    message: error.message,
+                    code: 500,
+                });
+            }
+        });
         this.emailService = new EmailService_1.default();
     }
 }

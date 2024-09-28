@@ -8,5 +8,6 @@ const EmailController_1 = __importDefault(require("../controllers/EmailControlle
 const emailRouter = (0, express_1.Router)();
 const emailController = new EmailController_1.default();
 emailRouter.post("/schedule", emailController.create);
+emailRouter.get("/cron/execute", emailController.cron);
 exports.default = emailRouter;
 //# sourceMappingURL=Email.js.map

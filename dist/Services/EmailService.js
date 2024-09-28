@@ -43,6 +43,39 @@ class EmailService {
             return yield this.email.setSent(data.id);
         });
     }
+    cron() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const date = new Date();
+            const BATCH_SIZE = 3;
+            const data = {
+                scheduledTime: date,
+            };
+            try {
+                const pending = yield this.getPending(data, BATCH_SIZE);
+                console.log(`There are ${pending.length} unsent emails.`);
+                console.info(`There are ${pending.length} unsent emails.`);
+                if (pending.length > 0) {
+                    for (const record of pending) {
+                        const send = yield this.send(record);
+                        if (send) {
+                            console.info(`Ref:${record.reference} has been sent`);
+                            return true;
+                        }
+                        else {
+                            console.info(`Ref:${record.reference} failed to send`);
+                        }
+                    }
+                    console.info(`Pending emails : ${pending.length}`);
+                }
+                else {
+                    console.info("No pending emails found");
+                }
+            }
+            catch (error) {
+                console.error(error);
+            }
+        });
+    }
 }
 exports.default = EmailService;
 //# sourceMappingURL=EmailService.js.map

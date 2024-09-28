@@ -51,6 +51,39 @@ class EmailService {
     }
     return await this.email.setSent(data.id);
   }
+
+  async cron() {
+    const date = new Date();
+
+    const BATCH_SIZE = 3;
+    const data = {
+      scheduledTime: date,
+    };
+
+    try {
+      const pending = await this.getPending(data, BATCH_SIZE);
+
+      console.log(`There are ${pending.length} unsent emails.`);
+      console.info(`There are ${pending.length} unsent emails.`);
+
+      if (pending.length > 0) {
+        for (const record of pending) {
+          const send = await this.send(record);
+          if (send) {
+            console.info(`Ref:${record.reference} has been sent`);
+            return true;
+          } else {
+            console.info(`Ref:${record.reference} failed to send`);
+          }
+        }
+        console.info(`Pending emails : ${pending.length}`);
+      } else {
+        console.info("No pending emails found");
+      }
+    } catch (error: any) {
+      console.error(error);
+    }
+  }
 }
 
 export default EmailService;

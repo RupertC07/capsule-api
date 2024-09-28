@@ -57,6 +57,27 @@ class EmailController {
       });
     }
   };
+
+  cron = async (req: Request, res: Response) => {
+    try {
+      await this.emailService.cron().then(() => {
+        return AppResponse.sendSuccess({
+          res,
+          data: null,
+          message: "Cron",
+          code: 200,
+        });
+      });
+    } catch (error: any) {
+      console.log(error);
+      return AppResponse.sendError({
+        res,
+        data: null,
+        message: error.message,
+        code: 500,
+      });
+    }
+  };
 }
 
 export default EmailController;

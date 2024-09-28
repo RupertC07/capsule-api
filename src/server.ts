@@ -4,7 +4,7 @@ import { StartEmailCron } from "./utils/CronJobs/Email";
 
 const port = config.app.port;
 
-StartEmailCron();
+// StartEmailCron();
 
 app.listen(port, () => {
   console.log(`PORT IS ACTIVE AT ${port}`);
