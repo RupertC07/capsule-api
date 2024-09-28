@@ -18,6 +18,7 @@ const EmailService_1 = __importDefault(require("../../Services/EmailService"));
 const StartEmailCron = () => __awaiter(void 0, void 0, void 0, function* () {
     node_cron_1.default.schedule("* * * * *", () => __awaiter(void 0, void 0, void 0, function* () {
         console.log("*********Cron starting**********");
+        console.info("*********Cron starting**********");
         const email = new EmailService_1.default();
         const date = new Date();
         const BATCH_SIZE = 10;
@@ -27,36 +28,25 @@ const StartEmailCron = () => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const pending = yield email.getPending(data, BATCH_SIZE);
             console.log(`There are ${pending.length} unsent emails.`);
+            console.info(`There are ${pending.length} unsent emails.`);
             if (pending.length > 0) {
                 for (const record of pending) {
                     const send = yield email.send(record);
-<<<<<<< HEAD
                     if (send) {
-                        console.log(`Ref:${record.reference} has been sent`);
+                        console.info(`Ref:${record.reference} has been sent`);
                     }
                     else {
-                        console.log(`Ref:${record.reference} failed to send`);
+                        console.info(`Ref:${record.reference} failed to send`);
                     }
-=======
-                      if (send) {
-                        console.log(`Ref:${record.reference} has been sent`);
-                      } else {
-                        console.log(`Ref:${record.reference} failed to send`);
-                      }
->>>>>>> fdd7f3541243374e29c6f165dba5f91fde7c245c
                 }
-                console.log(`Pending emails : ${pending.length}`);
+                console.info(`Pending emails : ${pending.length}`);
             }
             else {
-                console.log("No pending emails found");
+                console.info("No pending emails found");
             }
         }
         catch (error) {
-<<<<<<< HEAD
-            console.log(error);
-=======
-              console.log(error);
->>>>>>> fdd7f3541243374e29c6f165dba5f91fde7c245c
+            console.error(error);
         }
     }));
 });
