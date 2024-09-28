@@ -30,12 +30,20 @@ const StartEmailCron = () => __awaiter(void 0, void 0, void 0, function* () {
             if (pending.length > 0) {
                 for (const record of pending) {
                     const send = yield email.send(record);
+<<<<<<< HEAD
                     if (send) {
                         console.log(`Ref:${record.reference} has been sent`);
                     }
                     else {
                         console.log(`Ref:${record.reference} failed to send`);
                     }
+=======
+                      if (send) {
+                        console.log(`Ref:${record.reference} has been sent`);
+                      } else {
+                        console.log(`Ref:${record.reference} failed to send`);
+                      }
+>>>>>>> fdd7f3541243374e29c6f165dba5f91fde7c245c
                 }
                 console.log(`Pending emails : ${pending.length}`);
             }
@@ -44,7 +52,11 @@ const StartEmailCron = () => __awaiter(void 0, void 0, void 0, function* () {
             }
         }
         catch (error) {
+<<<<<<< HEAD
             console.log(error);
+=======
+              console.log(error);
+>>>>>>> fdd7f3541243374e29c6f165dba5f91fde7c245c
         }
     }));
 });
