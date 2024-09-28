@@ -22,7 +22,7 @@ const config = {
         server: process.env.SMTP_SERVER,
         port: process.env.SMTP_PORT,
         email: process.env.SMTP_EMAIL,
-        password: process.env.SMTP_PASSWOR,
+        password: process.env.SMTP_PASSWORD,
     },
 };
 exports.default = config;
